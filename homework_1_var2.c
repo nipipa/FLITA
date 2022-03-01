@@ -41,7 +41,7 @@ int main()
     printf("----------------------\n");
     printf("Dec:\t<==>\tBin:\n");
     for (i = 0; i < j; i++){
-        printf("[%d]\t", i);
+        printf("[%d]", i);
         printf("\t%d\t\t", mass_1[i]); // выводим наш массив, состоящих из чисел в десятичной системе
         printf("%d\n", DecToBin(mass_1[i]));
     }
