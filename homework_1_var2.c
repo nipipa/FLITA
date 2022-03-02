@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-int DecToBin(int x) // отдельно вынес функцию перевода из десятичной в двоичную систему
+int DecToBin(int x) // функция перевода из 10 в 2 СИ
 {
     int i, b,c=0;
     for (i = 0; x > 0; i++){
