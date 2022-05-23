@@ -9,6 +9,7 @@ struct timezone tz;
 int take_vertex();
 int matrix();
 int find();
+int draw_graph();
 
 void time_start() { 
     mingw_gettimeofday(&tv1, &tz); 
@@ -41,7 +42,7 @@ int find(char arr[ARR_MAX][ARR_MAX], int line, int ver)
     {
         for (b = 0; b <= ver; b++)
         {
-            if (arr[a][b] == '1')
+            if (arr[a][b] == '1' )
             {
                 for (int i = 0; i <= line; i++)
                 {
@@ -85,6 +86,7 @@ int take_vertex(char arr[ARR_MAX][ARR_MAX], int line, int ver)
     printf("0 - exit\n");
     printf("1 - enter the required vertex and find edges\n");
     printf("2 - show your matrix\n");
+    printf("3 - draw your graf\n");
     scanf("%d", &j);
     switch (j)
     {
@@ -93,6 +95,9 @@ int take_vertex(char arr[ARR_MAX][ARR_MAX], int line, int ver)
         break;
     case 2:
         matrix(arr, line, ver);
+        break;
+    case 3:
+        draw_graph(arr, line, ver);
         break;
     case 0:
         exit(EXIT_SUCCESS);
@@ -118,6 +123,42 @@ int matrix(char arr[ARR_MAX][ARR_MAX], int line, int ver)
         putchar('\n');
     }
     puts("------------------------");
+    take_vertex(arr, line, ver);
+    return 0;
+}
+
+int draw_graph(char arr[ARR_MAX][ARR_MAX], int line, int ver)
+{
+    FILE *file;
+    file = fopen("graph.gv", "w");
+    fprintf(file, "graph Grah {\n");
+    puts("------------------\n");
+    puts("Your graph will be opened as a photo\n");
+    puts("------------------\n");    
+    for (int d = 1; d <= line; d++)
+    {
+        fprintf(file, "%d\n", d);
+    }
+    for (int j = 0; j <= line; j++)
+    {
+        for (int k = 0; k <= ver; k++)
+        {
+            if (arr[j][k] == '1')
+            {
+                for (int f = j; f <= line; f++)
+                {
+                    if (arr[f][k] == '1' && f != j)
+                    {
+                        fprintf(file, "%d -- %d\n", j, f);
+                    }
+                }
+            }
+        }
+    }
+    fputc('}', file);
+    fclose(file);
+    system("dot graph.gv -Tpng -o graph.png");
+    system("graph.png");
     take_vertex(arr, line, ver);
     return 0;
 }
